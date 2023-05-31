@@ -3,19 +3,25 @@ import App from "./App.vue";
 
 import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
+import BookView from "@/views/BookView.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    name: "Home",
+    name: "home",
     path: "/",
     component: HomeView,
   },
   {
-    name: "About",
+    name: "about",
     path: "/about",
     component: AboutView,
+  },
+  {
+    name: "details",
+    path: "/books/:isbn",
+    component: BookView,
   },
 ];
 
