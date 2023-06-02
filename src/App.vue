@@ -19,6 +19,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: #2c3e50;
-  margin: 3rem 2rem;
+  margin: 3rem 0.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  #app {
+    margin: 3rem 1.25rem;
+  }
 }
 </style>
