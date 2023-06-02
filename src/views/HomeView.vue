@@ -9,9 +9,14 @@
         <h3>{{ book.title }}</h3>
         <h4>{{ book.subtitle }}</h4>
         <h5>{{ book.author }}</h5>
-        <router-link :to="{ name: 'details', params: { isbn: book.isbn } }"
-          >Details</router-link
-        >
+        <div class="router-links">
+          <router-link :to="{ name: 'details', params: { isbn: book.isbn } }"
+            >Details</router-link
+          >
+          <router-link :to="{ name: 'edit', params: { id: book.id } }"
+            >Edit</router-link
+          >
+        </div>
       </div>
     </li>
   </ul>
@@ -42,8 +47,8 @@ ul {
 
 li {
   display: grid;
-  grid-template-columns: 15% 85%;
-  grid-column-gap: 0.75rem;
+  grid-template-columns: 25% 75%;
+  grid-column-gap: 0.25rem;
   align-items: center;
   padding: 0.75rem 0;
   border-bottom: 1px solid #42b983;
@@ -59,8 +64,41 @@ h5 {
   margin: 0.25rem 0;
 }
 
+h1,
+h2,
+h3 {
+  color: #42b983;
+  font-weight: 500;
+}
+
 router-link {
   text-decoration: none;
   color: #42b983;
+}
+
+.router-links {
+  display: flex;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  li {
+    grid-template-columns: 20% 80%;
+    grid-column-gap: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  li {
+    grid-template-columns: 15% 85%;
+    grid-column-gap: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  li {
+    grid-template-columns: 10% 90%;
+    grid-column-gap: 0.75rem;
+  }
 }
 </style>
