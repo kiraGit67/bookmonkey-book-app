@@ -68,7 +68,7 @@
       />
     </div>
     <div class="form-row">
-      <label for="pages-input">Cover</label>
+      <label for="cover-input">Cover</label>
       <input
         type="text"
         name="cover-input"
