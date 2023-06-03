@@ -1,6 +1,6 @@
 <template>
   <h1>Edit Book</h1>
-  <form>
+  <form @submit.prevent="updateBook">
     <div class="form-row">
       <label for="title-input">Title</label>
       <input
@@ -65,12 +65,25 @@
       />
     </div>
     <div class="form-row">
+      <label for="pages-input">Pages</label>
+      <input
+        type="text"
+        name="cover-input"
+        id="cover-input"
+        v-model="book.cover"
+      />
+    </div>
+    <div class="form-row">
       <label for="abstract-input">Abstract</label>
       <textarea
         name="abstract-input"
         id="abstract-input"
         v-model="book.abstract"
       />
+    </div>
+    <div class="form-row">
+      <label for="update-book"></label>
+      <button>{{ buttonText }}</button>
     </div>
   </form>
   <!--
@@ -87,12 +100,29 @@ export default {
   data() {
     return {
       book: {},
+      buttonText: "Update Book",
     };
   },
   created() {
     fetch("http://localhost:4730/books/" + this.$route.params.id)
       .then((res) => res.json())
       .then((book) => (this.book = book));
+  },
+  methods: {
+    updateBook() {
+      const updatedBook = {
+        title: this.book.title,
+        subtitle: this.book.subtitle,
+        isbn: this.book.isbn,
+        abstract: this.book.abstract,
+        numPages: this.book.numPages,
+        author: this.book.author,
+        publisher: this.book.publisher,
+        price: this.book.price,
+        cover: this.book.cover,
+      };
+      console.log(updatedBook);
+    },
   },
 };
 </script>
