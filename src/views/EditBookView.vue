@@ -1,6 +1,9 @@
 <template>
   <h1>Edit Book</h1>
-  <form @submit.prevent="updateBook">
+  <form
+    action="{ name: 'details', params: { isbn: book.isbn } }"
+    @submit.prevent="updateBook"
+  >
     <div class="form-row">
       <label for="title-input">Title</label>
       <input
@@ -85,6 +88,8 @@
       <label for="update-book"></label>
       <button>{{ buttonText }}</button>
     </div>
+    <p class="success-message">{{ successMessage }}</p>
+    <p class="error-message">{{ errorMessage }}</p>
   </form>
   <!--
   <p>{{ this.$route.params }}</p>
@@ -117,6 +122,8 @@ export default {
     return {
       book: {},
       buttonText: "Update Book",
+      successMessage: "",
+      errorMessage: "",
     };
   },
   components: {
@@ -141,6 +148,30 @@ export default {
         cover: this.book.cover,
       };
       console.log(updatedBook);
+
+      if (
+        this.book.title !== "" &&
+        this.book.isbn !== "" &&
+        this.book.price !== ""
+      ) {
+        fetch("http://localhost:4730/books/" + this.$route.params.id, {
+          method: "PUT",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify(updatedBook),
+        })
+          .then((res) => res.json())
+          .then((updatedBookFromApi) => {
+            console.log(updatedBookFromApi);
+            this.book = updatedBookFromApi;
+            this.successMessage = "Book data updated sucessfully!";
+            this.errorMessage = "";
+          });
+      } else {
+        console.error("All required fields have to be filled in!");
+        this.errorMessage = "All required fields have to be filled in!";
+        this.successMessage = "";
+        return;
+      }
     },
   },
 };
@@ -171,6 +202,36 @@ textarea {
 textarea {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   min-height: 10rem;
+}
+
+.error-message,
+.success-message {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.error-message {
+  color: darkred;
+}
+
+.success-message {
+  color: green;
+}
+
+button {
+  max-width: 200px;
+  font-size: 1.25rem;
+  background-color: transparent;
+  color: #42b983;
+  border: 2px solid #42b983;
+  border-radius: 0;
+  padding: 0.25rem 0.35rem;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+button:hover {
+  background-color: #42b983;
+  color: white;
 }
 
 @media screen and (min-width: 768px) {
