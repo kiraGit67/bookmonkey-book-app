@@ -5,6 +5,7 @@ import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
 import BookView from "@/views/BookView.vue";
 import EditBookView from "@/views/EditBookView.vue";
+import AddBookView from "@/views/AddBookView.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
 
@@ -28,6 +29,11 @@ const routes = [
     name: "edit",
     path: "/books/edit/:id",
     component: EditBookView,
+  },
+  {
+    name: "add",
+    path: "/books/add/",
+    component: AddBookView,
   },
 ];
 
