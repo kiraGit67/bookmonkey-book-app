@@ -65,7 +65,7 @@
       />
     </div>
     <div class="form-row">
-      <label for="pages-input">Pages</label>
+      <label for="pages-input">Cover</label>
       <input
         type="text"
         name="cover-input"
@@ -91,10 +91,26 @@
   <pre>
       {{ book }}
   </pre>
+  
+  <book-form
+    :titleInput="book.title"
+    :subtitleInput="book.subtitle"
+    :isbnInput="book.isbn"
+    :authorInput="book.author"
+    :publisherInput="book.publisher"
+    :priceInput="book.price"
+    :pagesInput="book.numPages"
+    :coverInput="book.cover"
+    :abstractInput="book.abstract"
+    :buttonText="buttonText"
+    @updateBookData="updateBook"
+  />
   -->
 </template>
 
 <script>
+//import BookForm from "@/components/BookForm.vue";
+
 export default {
   name: "EditBookView",
   data() {
@@ -102,6 +118,9 @@ export default {
       book: {},
       buttonText: "Update Book",
     };
+  },
+  components: {
+    //BookForm,
   },
   created() {
     fetch("http://localhost:4730/books/" + this.$route.params.id)
