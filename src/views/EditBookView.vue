@@ -137,6 +137,7 @@ export default {
   methods: {
     updateBook() {
       const updatedBook = {
+        //id: this.book.isbn,
         title: this.book.title,
         subtitle: this.book.subtitle,
         isbn: this.book.isbn,
