@@ -82,7 +82,7 @@ h2 {
   .book-container {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 0.5rem;
+    gap: 1.5rem;
     align-items: center;
   }
 }
