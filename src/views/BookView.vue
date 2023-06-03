@@ -52,6 +52,11 @@ export default {
 </script>
 
 <style scoped>
+.book-container--book-image > img {
+  width: 100%;
+  max-width: 300px;
+}
+
 ul.book-details--list {
   list-style-type: none;
   padding-left: 0;
