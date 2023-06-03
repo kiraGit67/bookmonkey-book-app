@@ -130,7 +130,7 @@ export default {
     //BookForm,
   },
   created() {
-    fetch("http://localhost:4730/books/" + this.$route.params.id)
+    fetch("http://localhost:4730/books/" + this.$route.params.isbn)
       .then((res) => res.json())
       .then((book) => (this.book = book));
   },
@@ -155,7 +155,7 @@ export default {
         this.book.isbn !== "" &&
         this.book.price !== ""
       ) {
-        fetch("http://localhost:4730/books/" + this.$route.params.id, {
+        fetch("http://localhost:4730/books/" + this.$route.params.isbn, {
           method: "PUT",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(updatedBook),
