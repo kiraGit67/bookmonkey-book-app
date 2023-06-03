@@ -11,10 +11,10 @@
         <h5>{{ book.author }}</h5>
         <div class="router-links">
           <router-link :to="{ name: 'details', params: { isbn: book.isbn } }"
-            >Details</router-link
+            ><button>Details</button></router-link
           >
           <router-link :to="{ name: 'edit', params: { id: book.id } }"
-            >Edit</router-link
+            ><button>Edit</button></router-link
           >
         </div>
       </div>
@@ -71,9 +71,21 @@ h3 {
   font-weight: 500;
 }
 
-router-link {
-  text-decoration: none;
+button {
+  font-size: 0.95rem;
+  font-weight: 500;
   color: #42b983;
+  background-color: transparent;
+  padding: 0.25rem;
+  border: 1px solid #42b983;
+  border-radius: 0;
+  margin-top: 0.25rem;
+  transition: background-color 0.5s steps(3), color 0.5s steps(3);
+}
+
+button:hover {
+  background-color: #42b983;
+  color: white;
 }
 
 .router-links {
