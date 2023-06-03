@@ -13,7 +13,7 @@
           <router-link :to="{ name: 'details', params: { isbn: book.isbn } }"
             ><button>Details</button></router-link
           >
-          <router-link :to="{ name: 'edit', params: { id: book.id } }"
+          <router-link :to="{ name: 'edit', params: { isbn: book.isbn } }"
             ><button>Edit</button></router-link
           >
         </div>
