@@ -27,7 +27,7 @@ const routes = [
   },
   {
     name: "edit",
-    path: "/books/edit/:id",
+    path: "/books/edit/:isbn",
     component: EditBookView,
   },
   {
