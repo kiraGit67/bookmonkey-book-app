@@ -3,41 +3,84 @@
     <h1>{{ h1title }}</h1>
 
     <div class="filter-actions">
-      <select
-        name="filter-options"
-        id="filter-options"
-        v-model="filterStatus"
-        @change="getBooks"
-      >
-        <option value="">All Books</option>
-        <option value="?_page=2&_limit=10">Page 2 limit 10</option>
-        <option value="?_sort=title&_order=desc">Sort down by title</option>
-        <option value="?_start=25&_end=50">From 25 to 50</option>
-      </select>
-      <input
-        type="text"
-        name="search"
-        id="search"
-        placeholder="Search for"
-        v-model="searchTerm"
-        @input="getSearchedBooks()"
-      />
-      <input
-        type="text"
-        name="author-search"
-        id="author-search"
-        placeholder="Search for Author"
-        v-model="authorSearch"
-        @input="getSearchedBooks('author')"
-      />
-      <input
-        type="text"
-        name="publisher-search"
-        id="publisher-search"
-        placeholder="Search for Publisher"
-        v-model="publisherSearch"
-        @input="getSearchedBooks('publisher')"
-      />
+      <div class="filters">
+        <select
+          name="filter-options"
+          id="filter-options"
+          v-model="filterStatus"
+          @change="getBooks"
+        >
+          <option value="">All Books</option>
+          <option value="?_page=2&_limit=10">Page 2 limit 10</option>
+          <option value="?_sort=title&_order=desc">Sort down by title</option>
+          <option value="?_sort=title&_order=asc">Sort up by title</option>
+          <option value="?_start=25&_end=50">From 25 to 50</option>
+          <option value="?numPages_gte=200&numPages_lte=400">
+            Between 200 and 400 Pages
+          </option>
+        </select>
+        <div class="radio-filter">
+          <div class="radio-wrapper">
+            <input
+              type="radio"
+              name="max-pages"
+              id="max-pages"
+              value="250"
+              v-model="maxPages"
+              @change="getSearchedBooks('pages')"
+            />
+            <label for="250">250 pages</label>
+          </div>
+          <div class="radio-wrapper">
+            <input
+              type="radio"
+              name="max-pages"
+              id="max-pages"
+              value="500"
+              v-model="maxPages"
+              @change="getSearchedBooks('pages')"
+            />
+            <label for="500">500 pages</label>
+          </div>
+          <div class="radio-wrapper">
+            <input
+              type="radio"
+              name="max-pages"
+              id="max-pages"
+              value="750"
+              v-model="maxPages"
+              @change="getSearchedBooks('pages')"
+            />
+            <label for="750">750 pages</label>
+          </div>
+        </div>
+      </div>
+      <div class="search-fields">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          placeholder="Search for"
+          v-model="searchTerm"
+          @input="getSearchedBooks()"
+        />
+        <input
+          type="text"
+          name="author-search"
+          id="author-search"
+          placeholder="Search for Author"
+          v-model="authorSearch"
+          @input="getSearchedBooks('author')"
+        />
+        <input
+          type="text"
+          name="publisher-search"
+          id="publisher-search"
+          placeholder="Search for Publisher"
+          v-model="publisherSearch"
+          @input="getSearchedBooks('publisher')"
+        />
+      </div>
     </div>
   </div>
   <ul>
@@ -73,6 +116,8 @@ export default {
       searchTerm: "",
       authorSearch: "",
       publisherSearch: "",
+      maxPrice: "",
+      maxPages: 0,
     };
   },
   created() {
@@ -86,9 +131,13 @@ export default {
     },
     getSearchedBooks(param) {
       if (param === "author") {
-        this.filterStatus = "?author=" + this.authorSearch;
+        this.filterStatus = "?author_like=" + this.authorSearch;
       } else if (param === "publisher") {
-        this.filterStatus = "?publisher=" + this.publisherSearch;
+        this.filterStatus = "?publisher_like=" + this.publisherSearch;
+      } else if (param === "price") {
+        this.filterStatus = "?price_like=" + this.maxPrice;
+      } else if (param === "pages") {
+        this.filterStatus = "?numPages_lte=" + this.maxPages;
       } else {
         this.filterStatus = "?q=" + this.searchTerm;
       }
@@ -152,11 +201,25 @@ button:hover {
   gap: 1rem;
 }
 
-.filter-actions {
+.search-fields,
+.filters {
   display: flex;
   gap: 0.5rem;
   _flex-wrap: wrap;
   flex-shrink: 1;
+}
+
+.filters {
+  justify-content: space-between;
+}
+
+.filters + .search-fields {
+  margin-top: 0.75rem;
+}
+
+.radio-filter {
+  display: flex;
+  gap: 0.5rem;
 }
 
 input,
@@ -172,10 +235,25 @@ select:focus-within {
   outline: 2px solid #42b983;
 }
 
+@media screen and (max-width: 767px) {
+  .filters,
+  .search-fields {
+    flex-direction: column;
+  }
+}
+
 @media screen and (min-width: 768px) {
   li {
     grid-template-columns: 20% 80%;
     grid-column-gap: 0.5rem;
+  }
+
+  .search-fields {
+    justify-content: space-between;
+  }
+
+  .search-fields > input {
+    width: 100%;
   }
 }
 
