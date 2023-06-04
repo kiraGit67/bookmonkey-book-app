@@ -1,7 +1,7 @@
 <template>
   <h1>{{ h1title }}</h1>
   <ul>
-    <li v-for="book in books" :key="book.id">
+    <li v-for="book in books" :key="book.isbn">
       <div class="book-img">
         <img :src="book.cover" :alt="book.title" :title="book.title" />
       </div>
