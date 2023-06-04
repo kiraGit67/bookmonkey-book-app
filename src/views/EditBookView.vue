@@ -124,6 +124,23 @@ export default {
       buttonText: "Update Book",
       successMessage: "",
       errorMessage: "",
+      errors: {
+        isbn: {
+          msg: "An ISBN has to be given.",
+          param: "isbn",
+          location: "body",
+        },
+        title: {
+          msg: "A Title has to be given.",
+          param: "title",
+          location: "body",
+        },
+        price: {
+          msg: "A Price has to be given.",
+          param: "price",
+          location: "body",
+        },
+      },
     };
   },
   components: {
@@ -170,6 +187,15 @@ export default {
       } else {
         console.error("All required fields have to be filled in!");
         this.errorMessage = "All required fields have to be filled in!";
+        if (this.book.isbn === "") {
+          this.errorMessage += "\n" + this.errors.isbn.msg;
+        }
+        if (this.book.title === "") {
+          this.errorMessage += "\n" + this.errors.title.msg;
+        }
+        if (this.book.price === "") {
+          this.errorMessage += "\n" + this.errors.price.msg;
+        }
         this.successMessage = "";
         return;
       }
