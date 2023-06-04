@@ -1,5 +1,45 @@
 <template>
-  <h1>{{ h1title }}</h1>
+  <div class="header-row">
+    <h1>{{ h1title }}</h1>
+
+    <div class="filter-actions">
+      <select
+        name="filter-options"
+        id="filter-options"
+        v-model="filterStatus"
+        @change="getBooks"
+      >
+        <option value="">All Books</option>
+        <option value="?_page=2&_limit=10">Page 2 limit 10</option>
+        <option value="?_sort=title&_order=desc">Sort down by title</option>
+        <option value="?_start=25&_end=50">From 25 to 50</option>
+      </select>
+      <input
+        type="text"
+        name="search"
+        id="search"
+        placeholder="Search for"
+        v-model="searchTerm"
+        @input="getSearchedBooks()"
+      />
+      <input
+        type="text"
+        name="author-search"
+        id="author-search"
+        placeholder="Search for Author"
+        v-model="authorSearch"
+        @input="getSearchedBooks('author')"
+      />
+      <input
+        type="text"
+        name="publisher-search"
+        id="publisher-search"
+        placeholder="Search for Publisher"
+        v-model="publisherSearch"
+        @input="getSearchedBooks('publisher')"
+      />
+    </div>
+  </div>
   <ul>
     <li v-for="book in books" :key="book.isbn">
       <div class="book-img">
@@ -29,12 +69,31 @@ export default {
     return {
       h1title: "BookMonkey Book Store",
       books: [],
+      filterStatus: "",
+      searchTerm: "",
+      authorSearch: "",
+      publisherSearch: "",
     };
   },
   created() {
-    fetch("http://localhost:4730/books")
-      .then((res) => res.json())
-      .then((books) => (this.books = books));
+    this.getBooks();
+  },
+  methods: {
+    getBooks() {
+      fetch("http://localhost:4730/books" + this.filterStatus)
+        .then((res) => res.json())
+        .then((books) => (this.books = books));
+    },
+    getSearchedBooks(param) {
+      if (param === "author") {
+        this.filterStatus = "?author=" + this.authorSearch;
+      } else if (param === "publisher") {
+        this.filterStatus = "?publisher=" + this.publisherSearch;
+      } else {
+        this.filterStatus = "?q=" + this.searchTerm;
+      }
+      this.getBooks();
+    },
   },
 };
 </script>
@@ -93,6 +152,26 @@ button:hover {
   gap: 1rem;
 }
 
+.filter-actions {
+  display: flex;
+  gap: 0.5rem;
+  _flex-wrap: wrap;
+  flex-shrink: 1;
+}
+
+input,
+select {
+  padding: 0.25rem 0.15rem;
+  font-size: 1.1rem;
+  border: 1px solid lightgrey;
+  border-radius: 0;
+}
+
+input:focus-within,
+select:focus-within {
+  outline: 2px solid #42b983;
+}
+
 @media screen and (min-width: 768px) {
   li {
     grid-template-columns: 20% 80%;
@@ -111,6 +190,16 @@ button:hover {
   li {
     grid-template-columns: 10% 90%;
     grid-column-gap: 0.75rem;
+  }
+
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filter-actions {
+    flex-shrink: 0;
   }
 }
 </style>
