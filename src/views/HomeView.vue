@@ -11,9 +11,17 @@
           @change="getBooks"
         >
           <option value="">All Books</option>
+          <option value="?_sort=title&_order=asc">Sort up by Title</option>
+          <option value="?_sort=title&_order=desc">Sort down by Title</option>
+          <option value="?_sort=author&_order=asc">Sort up by Author</option>
+          <option value="?_sort=author&_order=desc">Sort down by Author</option>
+          <option value="?_sort=publisher&_order=asc">
+            Sort up by Publisher
+          </option>
+          <option value="?_sort=publisher&_order=desc">
+            Sort down by Publisher
+          </option>
           <option value="?_page=2&_limit=10">Page 2 limit 10</option>
-          <option value="?_sort=title&_order=desc">Sort down by title</option>
-          <option value="?_sort=title&_order=asc">Sort up by title</option>
           <option value="?_start=25&_end=50">From 25 to 50</option>
           <option value="?numPages_gte=200&numPages_lte=400">
             Between 200 and 400 Pages
@@ -92,6 +100,7 @@
         <h3>{{ book.title }}</h3>
         <h4>{{ book.subtitle }}</h4>
         <h5>{{ book.author }}</h5>
+        <h5>{{ book.publisher }}</h5>
         <div class="router-links">
           <router-link :to="{ name: 'details', params: { isbn: book.isbn } }"
             ><button>Details</button></router-link
