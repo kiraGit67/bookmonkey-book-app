@@ -24,7 +24,15 @@
           <span><strong>Price</strong></span
           ><span>{{ book.price }}</span>
         </li>
+        <li>
+          <span><strong>ISBN</strong></span
+          ><span>{{ book.isbn }}</span>
+        </li>
       </ul>
+      <router-link
+        :to="{ name: 'edit', params: { isbn: this.$route.params.isbn } }"
+        >Edit</router-link
+      >
     </div>
   </div>
   <!-- 
@@ -76,6 +84,21 @@ h2 {
 h1,
 h2 {
   font-weight: 500;
+}
+
+a {
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #42b983;
+  padding: 0.25rem 0.5rem;
+  border: 2px solid #42b983;
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+a:hover {
+  background-color: #42b983;
+  color: white;
 }
 
 @media screen and (min-width: 768px) {
